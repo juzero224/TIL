@@ -99,6 +99,13 @@ print('안녕 여러분?')
 - ~~오지혜~~
 - `~~` 텍스트 `~~`
 
+### 형광펜
+
+* ==텍스트==
+* `==`텍스트`==`
+
+
+
 <br>
 
 ## Divider(-/_)
@@ -133,4 +140,63 @@ print('안녕 여러분?')
 | Header_1 | Header_2 |
 | -------- | -------- |
 | Value 01 | Value 02 |
+
+
+
+## Check Box
+
+* `-[ ]` : 체크박스
+
+* `- [x]` : 체크박스 체크
+
+- [ ] : 체크박스
+
+- [x] : 체크박스 체크
+
+
+
+## 위 첨자, 아래 첨자
+
+* 텍스트 <sup>텍스트</sup>
+
+* 텍스트 <sub>텍스트</sub>
+
+* 텍스트 `<sup>`텍스트`</sup>`
+
+* 텍스트 `<sub>`텍스트`</sub>`
+
+
+
+## 각주
+
+텍스트 Typora[^1]
+
+[^1]: Typora는 markdown 편집기(뷰어) 입니다.
+
+* 텍스트 Typora`[^1]`
+* ^1을 누르면 각주를 넣을 수 있다.
+
+
+
+## 주석
+
+* 텍스트 <!--열공-->
+* 텍스트 `<!--열공-->`
+
+
+
+## HTML 태그를 이용한 글자 색상 변경
+
+* <span style='color:blue'>안녕</span>
+
+* <span style='color:#a83236'>나는</span>
+* <span style='color:rgb(21,102,42)'>주영이야</span>
+
+* `<span style='color:blue'>`안녕`</span>`
+
+* `<span style='color:#a83236'>`나는`</span>`
+* `<span style='color:rgb(21,102,42)'>`주영이야`</span>`
+
+* color 검색
+* [color picker](https://www.w3schools.com/colors/colors_picker.asp)
 

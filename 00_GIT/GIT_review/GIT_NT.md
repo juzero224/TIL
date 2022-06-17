@@ -96,3 +96,35 @@
 2. `README.md` 를 만들고 `자기소개 페이지 작성하기`
 3. 여러번 반복하기! `add` - `commit` - `push`
 
+
+
+
+
+## 6/17 수업 필기
+
+`git branch` : 브랜치의 종류, 어느 브랜치인지 확인하기
+
+`git branch <브랜치>` : 브랜치 생성
+
+* `git branch haley`
+* 브랜치 생성 예시 `git branch juyeong`
+
+`git checkout <브랜치>` : 브랜치 이동
+
+* 없는 브랜치 명을 작성했을땐 에러 발생
+
+`git merge <브랜치명>`:
+
+* ex. (master) 브랜치에서 (juyeong) 브랜치로
+  * `git merge juyeong` 현 브랜치 위치는 master
+  * merge 할 때
+    * `>>>> head ..... <<<<<< 브랜치` 처럼 구분 짓는 선만 지워주고 남길 것만 남기면 됨
+
+`git clone <레포주소>` : 그대로 복제
+
+* 그냥 말그대로 복제일 뿐, 내가 수정한 것을 반영해달라고 요청할 권한이 없다.
+* `git pull`
+
+`fork`:
+
+* `pull request` : 내가 수정한 것을 반영해달라고 요청을 보낼 수 있다.
