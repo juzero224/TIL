@@ -460,3 +460,177 @@ pd.concat([df1,df2], axis=1, join='inner')
 pd.merge(df1, df2, how='left', left_on='stock_name', right_on = 'name')
 ```
 
+
+
+
+
+#### 4-3 데이터프레임 결합
+
+- 행 인덱스 기준으로 결합 : ==DataFrame1.join(DataFrame2, how='left')==
+  - 두 데이터프레임의 행 인덱스를 기준으로 결합
+  - `on=keys`옵션을 설정하면 행 인덱스 대신 다른 열을 기준으로 결합
+  - `index_col`옵션을 적용하여 행 인덱스 설정 가능
+  - default : **how='left'** (왼쪽 df의 행 인덱스를 기준으로 결합)
+    - `how='inner'` : 두 데이터프레임에 공통으로 존재하는 행 인덱스 기준으로 추출
+
+```python
+df1.join(df2, how='inner')
+```
+
+
+
+
+
+### 5) 그룹 연산
+
+- 1단계) 분할(split) : 데이터를 특정 조건에 의해 분할
+- 2단계) 적용(apply) : 데이터 집계, 변환, 필터링하는데 필요한 메소드 적용
+- 3단계) 결합(combine) : 2단계의 처리 결과를 하나로 결합
+
+
+
+#### 5-1 그룹 객체 만들기(분할 단계)
+
+- 그룹 연산(분할) : ==DataFrame 객체.groupby(기준이 되는 열)==
+  - 데이터프레임의 특정 열을 기준으로 데이터프레임을 분할하여 그룹 객체를 반환
+  - `get_group()` 메소드를 적용하면 특정 그룹만을 선택할 수 있다.
+
+```python
+df = titanic.loc[:,['age','sex','class','fare','survived']]
+grouped = df.groupby(['class'])
+```
+
+```python
+grouped.get_group('Third')  # 특정 그룹만 선택
+```
+
+```python
+grouped.mean() # mean() : 평균
+grouped.std()  # std() : 표준편차
+```
+
+
+
+- 그룹 연산(분할) : ==DataFrame 객체.groupby(기준이 되는 열의 리스트)==
+  - 여러 개의 기준 값을 사용
+  - 반환되는 그룹 객체의 인덱스는 다중 구조를 갖음
+
+```python
+grouped_two = df.groupby(['class','sex'])
+grouped_two.get_group(('Third','female'))  # 특정 그룹만 선택
+grouped_two.mean() # >> 멀티 인덱스
+```
+
+
+
+
+
+#### 5-2 그룹 연산 메소드(적용 - 결합 단계)
+
+- 표준편차 데이터 집계(내장 함수) : ==group 객체.std()==
+  - 데이터 집계 (aggreagation)
+  - mean(), max(), min(), sum(), count(), size(), var(), std(), describe(), info(), first(), last()
+
+
+
+- agg() 메소드 데이터 집계 : ==group 객체.agg(매핑 함수)==
+
+```python
+def min_max(x):
+    return x.max() - x.min()
+
+grouped.agg(min_max)
+```
+
+
+
+- 모든 열에 여러 함수 매핑 : ==group 객체.agg([함수1, 함수2, 함수3, ... ])==
+
+```python
+grouped.agg(['min','max'])
+# sex는 범주형 데이터라 min_max 안됨
+```
+
+
+
+- 각 열마다 다른 함수를 매핑 : ==group 객체.agg({'열1' : 함수1, '열2' : 함수2, ...})==
+
+```python
+grouped.agg({'fare':['min','max'],
+            'age':'mean'})
+```
+
+
+
+- 데이터 변환 연산 : ==group 객체.transform(매핑 함수)==
+  - `transform()`
+  - 그룹 별로 구분하여 각 원소에 함수를 적용하지만 그룹별 집계 대신 각 원소의 본래 행 인덱스와 열 이름을 기준으로 연산 결과를 반환
+  - 그룹 연산의 결과를 원본 데이터프레임과 같은 형태로 변형하여 정리
+
+```python
+# 그룹 객체의 age 열을 iteration으로 z-score를 계산하여 출력
+for key, group in grouped.age:
+    group_zscore = (group - grouped.age.mean().loc[key]) / grouped.age.std().loc[key]
+```
+
+
+
+```python
+# z-score 계산하는 사용자 함수 정의
+def z_score(x):
+    return (x-x.mean()) / x.std()
+
+age_zscore = grouped.age.transform(z_score)
+```
+
+`z-score` 계산하는 사용자 함수 정의, `transform()` 메소드의 인자로 전달
+
+
+
+
+
+- 그룹 객체 필터링 : ==group 객체.filter(조건식 함수)==
+  - `filter()`
+  - 조건이 참인 그룹의 데이터만 추출
+
+```python
+# 데이터 개수가 200개 이상인 것만 추출
+grouped_filter = grouped.filter(lambda x : len(x) >= 200)
+```
+
+
+
+- 범용 메소드 : ==group 객체.apply(매핑 함수)==
+  - `apply()` (메소드)
+  - 판다스 객체의 개별 원소를 특정 함수에 일대일로 매핑
+  - 사용자가 원하는 대부분의 연산을 그룹 객체에도 적용할 수 있음
+  - default : **axis=0**
+
+```python
+age_grouped = grouped.apply(lambda x: x.describe())
+```
+
+
+
+```python
+# z-score 계산을 apply()로 해볼까요?
+
+def z_score(x):
+    return (x-x.mean()) / x.std()
+
+age_zscore = grouped.age.apply(z_score)  # default : axis=0
+```
+
+
+
+```python
+# 필터링 : age 열의 데이터 평균이 30보다 작은 그룹만을 필터링하여 출력
+
+age_filter = grouped.apply(lambda x: x.age.mean() < 30)
+
+for x in age_filter.index:
+    if age_filter[x] == True:
+        print(grouped.get_group(x))
+        print('\n')
+```
+
