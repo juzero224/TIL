@@ -563,3 +563,291 @@ $$
 
 #### 신뢰구간과 신뢰수준
 
+- 신뢰구간
+  - 모수가 포함될 것이라고 예상되는 구간, 모수가 어느 범위 안에 있는지를 확률적으로 보여 주는 방법
+  - 95%의 신뢰수준으로 평균이 μ ± a 다.
+  - 95%의 신뢰구간 안에 모집단(조사 대상)의 평균이 있다는 의미
+
+
+
+#### 검정 방법 선택
+
+- 가설 검정 : 표본 정보를 사용해서 가설의 합당성 여부를 판정
+- 귀무 가설을 기각 여부를 결정하는 기준 : 기각역, 임계(threshold)
+
+- 양측 검정
+  - 귀무 가설을 기각하는 영역(기각역)이 양쪽에 있는 검정
+  - '대립 가설이 아니다(크거나 작다)'라면 양측 검정(two-sided test)
+- 단측 검정
+  - 귀무 가설을 기각하는 영역(기각역)이 한쪽 끝에 있는 검정
+  - '대립 가설이 ~보다 작다', '대립 가설이 ~보다 크다' >> 단측 검정(one-sided test)
+  - 대립 가설의 주장이 방향성을 가지면 단측검정
+  - 방향성을 갖지 않으면 양측 검정
+- 우측 검정
+  - 단측 검정, 귀무 가설을 기각하는 영역(기각역)이 오른쪽에 있는 검정
+  - "대립 가설이 ~보다 크다"
+- 좌측 검정
+  - 단측 검정 중, 귀무 가설을 기각하는 영역(기각역)이 왼쪽에 있는 검정
+  - "대립 가설이 ~보다 작다"
+
+
+
+- 검정 통계량 계산(표본 추출)
+
+| 가설 검정     | 검정 통계량     |
+| ------------- | --------------- |
+| z-검정        | z-통계량        |
+| t-검정        | t-통계량        |
+| 분산 분석     | F-통계량        |
+| 카이제곱 검정 | 카이제곱 통계량 |
+
+
+
+- 통계적 가설 검정
+  - 모집단 분산(표준편차)을 알고 있다면 >> `z-검정`
+    - 모집단 평균의 차이를 검정하는 용도
+    - 표본 크기 큼(30개 이상)
+  - 모집단 표준편차를 모를 때 >> `t-검정`
+    - 두 집단 간 평균을 비교하는 검정 용도
+    - 표본 크기 작음(30개 이하)
+  - 대부분 t-검정
+  - 1) 표본에 대해 t-검정 통계량 값 계산
+    2) 값이 t-분포 그래프의 양 끝에 속할수록 모집단과 평균이 다르다는 것을 보여줌
+    3) 지정한 유의확률(%)을 사용하여 유의 값을 선정하고 검정함
+
+
+
+- 검정 통계량
+
+- $$
+  검정 통계량 = \frac{표본평균 - 모평균}{표본표준편차}
+  $$
+
+- 자유도
+
+  - x값이 가질 수 있는 값의 범위를 의미
+  - 자유도가 주어지지 않는다면 자유도 = 표본 수(n) - 1
+
+<br>
+
+#### 통계적 가설 검정 python
+
+- `np.random.normal()` 정규분포
+- t검정 : `scipy.stats`의 `ttest_1samp` 메서드 사용
+
+```python
+# 대한민국 20세 이상 남성 평균 키 : 173cm
+# 귀무가설 : 멀티캠퍼스 남학생의 평균 키는 173cm이다
+# 대립가설 : 멀티캠퍼스 남학생의 평균 키는 173cm 아니다
+
+# 통계적 가설 검정
+import numpy as np
+from scipy import stats
+
+# 난수 발생을 위한 시드(seed) 1을 줍니다(코드를 실행할 때마다 똑같은 난수 생성)
+np.random.seed(1)
+
+# 평균 178, 표준편차 5로 임의의 높이 20개를 생성
+heights = [178 + np.random.normal(0,5) for _ in range(20)]
+
+# t-검정 수행
+tTestResult = stats.ttest_1samp(heights, 173)
+
+# 결과 출력
+print("The T-statistic is %.3f and the p-value is %3.f" % tTestResult)
+
+# 결과해석
+# p_value가 0.00004 < 0.05(alpha, 유의수준)보다 작으므로 귀무가설 기각, 대립가설 채택
+# 즉, 멀티캠퍼스 남학생의 평균은 178(표준편차=5)은 대한민국 20세 이상 남학생 키 평균과 차이가 있다.
+```
+
+<br>
+
+<br>
+
+### 성능평가
+
+####  혼동행렬
+
+![image-20220623235615834](Statistics-imgaes/image-20220623235615834.png)
+
+- TP(True Positive): 맞는 것을 맞다고 예측한 것
+- TN(True Negative): 아닌 것을 틀리다고 예측한 것
+- FP(False Positive): 아닌 것을 맞다고 예측한 것
+- FN(False Negative): 맞는 것을 틀리다고 예측한 것
+
+<br>
+
+#### 성능 평가
+
+- 정밀도 : 암환자로 예측한 사람 중에 진짜 암환자로 결과가 나온 사람의 비율
+
+$$
+정밀도(Precision) = \frac{TP}{TP+FP}
+$$
+
+- 재현율 : 진짜 암환자 중에 진단 결과 암환자라고 나온 사람의 비율
+
+$$
+재현율(Recall) = \frac{TP}{TP+FN}
+$$
+
+- 정확도 : 전체 암환자 중에 암환자라고 나온 사람의 비율
+
+$$
+정확도(Accuracy) = \frac{TP+TN}{TP+FP+TN+FN}
+$$
+
+- F1 스코어
+  - 정밀도와 재현율의 조화평균
+
+$$
+F_1 = 2*\frac{정밀도X재현율}{정밀도+재현율}
+$$
+
+#### 혼동행렬 python
+
+- `conf usion_matrix(y,p)` 
+  - `[2 0]` `[2 2]` : 첫 행 실제로 0인 데이터 두 개를 정확하게 0으로 예측했다는 의미
+
+```python
+import numpy as np
+import sklearn.metrics as metrics
+
+# 0 : 정상(암 없음)  1 : 암환자
+y = np.array([1,1,1,1,0,0])  # 실제 관측값
+p = np.array([1,1,1,0,0,0])  # 예측 값
+
+# 정확도, 정밀도, 재현율, f1 score
+# 정확도
+print('accuracy:',metrics.accuracy_score(y,p))
+# 정확도는 0.83 (83%)
+
+# 정밀도
+print('precision', metrics.precision_score(y,p))
+# 정밀도는 1.0 (100%)
+
+# 재현율
+print('recall', metrics.recall_score(y,p))
+# 재현율은 0.75 (75%)
+
+# f1-score
+print('f1', metrics.f1_score(y,p))
+# f1-score는 0.857 (86%)
+
+# 정확도, 정밀도 재현율, f1-score 한 번에 출력(****)
+print(metrics.classification_report(y,p))
+print(metrics.confusion_matrix(y,p))
+
+# acc
+(2+3) / (2+0+1+3)
+
+# precision (기준 : predict >> True)
+2/2
+
+# recall (기준 : actual >> True)
+2 / (1+3)
+```
+
+<br>
+
+<br>
+
+#### ROC 커브
+
+![image-20220624000614529](Statistics-imgaes/image-20220624000614529.png)
+
+- 판단 불분명 구간을 최소화한 것이 ROC  커브
+- ROC 커브의 y축 : 민감도(TPR, True Positive Rate)
+- x축 : 특이도(FPR, False Positive Rate)
+- 아래 면적 : AUC(Area Under the Curve), AUC 면적이 넓을수록 좋은 커브
+- 민감도 : 맞는 것을 맞다고 예측
+- 특이도 : 틀린 것을 틀리다고 예측
+- AUC : 그래프 아래 면적, 계산 결과를 수치화하여 성능을 간단히 비교할 수 있음
+
+![image-20220624000827488](Statistics-imgaes/image-20220624000827488.png)
+
+
+
+#### ROC커브 pyton
+
+- ROC Curve
+
+  - 특이도 (x축, False Positive Rate : FPR) : 틀_린 것을 틀_렸다고 예측하는 것 (틀틀틀 >> x)
+
+  - 민감도 (y축, 재현율, True Positive Rate : TPR) : 맞_은 것을 맞_다고 예측  (민맞맞 >> y)
+
+```python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.datasets import make_classification
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_curve
+from sklearn.metrics import roc_auc_score
+
+# roc curve 함수 정의
+def plot_roc_curve(fpr, tpr):
+    plt.plot(fpr, tpr, color='orange', label='ROC')
+    plt.plot([0,1],[0,1], color='darkblue', linestyle='--')
+    plt.xlabel('False Positive Rate(특이도)')
+    plt.ylabel('True Positive Rate(민감도)')
+    plt.title('Receiver Operating Characteristic (ROC) Curve')
+    plt.legend()
+    plt.show()
+    
+# 샘플 데이터 1000건 생성
+data_X, class_label = make_classification(n_samples=1000, n_classes=2,
+                                         weights=[1,1], random_state=42)
+train_X, test_X, train_y, test_y= train_test_split(data_X, class_label,
+                                                   test_size=0.3, random_state=42)
+
+# 모델링(학습 데이터를 앙상블 모형 중 랜덤포레스트 모델에 적용)
+
+model = RandomForestClassifier()
+model.fit(train_X, train_y)
+# fit : 모델을 학습하기 적합하게 만들어 >> 모델 생성
+# 반드시 모델 구축시에는 train data 사용해야 함
+
+# 예측 값(확률) >> test data로 예측
+
+probs = model.predict_proba(test_X)
+# probs
+
+# positive class만 유지하고자 함
+
+probs = probs[:,1]
+# 행(데이터 레코드) 다 가져오고 class가 1(positive)인 것만 추출
+
+# AUC (Area Under Curve)
+auc = roc_auc_score(test_y, probs)
+# test data (실제 데이터)와 예측 데이터(probs)의 비교
+# auc
+
+# ROC 곡선 확보
+fpr, tpr, tresholds = roc_curve(test_y, probs)
+
+# 정의된 함수를 사용하여 ROC 곡선 생성
+fpr, tpr, tresholds = roc_curve(test_y, probs)
+plot_roc_curve(fpr, tpr)
+```
+
+roc curve를 그림그려 fpr특이도 tpr: 민감도 재현도
+
+하나는 data고, 하나는 class_label (0,1)
+
+train은 7:3
+
+예측은 test data로 해야된다
+
+probs에서 데이터 다가지고 오고, labeling이 postive 1
+
+실제 데이타 testy 예측한 probs를 roc 커브의 auc 계산
+
+특이도 fpr x축,  y축 민감도 tpr 로 treshold로 만들어서
+
+정의하고 roccruve를 만듦
