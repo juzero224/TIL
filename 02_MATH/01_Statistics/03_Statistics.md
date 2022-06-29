@@ -141,6 +141,8 @@ plt.show()
 
 
 
+-----------------------------
+
 
 
 ### 확률분포의 유형
@@ -382,6 +384,10 @@ $$
 
 <br>
 
+------------------
+
+
+
 ### 모집단분포와 확률분포
 
 - 모집단과 모수
@@ -395,6 +401,10 @@ $$
 <br>
 
 <br>
+
+------------------------------------
+
+
 
 ### 회귀 분석
 
@@ -477,6 +487,10 @@ $$
 
 <br>
 
+---------------------------------------
+
+
+
 ### 최소제곱법
 
 - 최소제곱법 (Least Square Method, LSM)
@@ -491,6 +505,10 @@ $$
 <br>
 
 <br>
+
+---------------------------------
+
+
 
 ### 통계적 가설 검정
 
@@ -665,6 +683,10 @@ print("The T-statistic is %.3f and the p-value is %3.f" % tTestResult)
 
 <br>
 
+------------------------
+
+
+
 ### 성능평가
 
 ####  혼동행렬
@@ -836,18 +858,19 @@ fpr, tpr, tresholds = roc_curve(test_y, probs)
 plot_roc_curve(fpr, tpr)
 ```
 
-roc curve를 그림그려 fpr특이도 tpr: 민감도 재현도
+> > roc curve를 그림그려 fpr특이도 tpr: 민감도 재현도
+> >
+> > 하나는 data고, 하나는 class_label (0,1)
+> >
+> > train은 7:3
+> >
+> > 예측은 test data로 해야된다
+> >
+> > probs에서 데이터 다가지고 오고, labeling이 postive 1
+> >
+> > 실제 데이타 testy 예측한 probs를 roc 커브의 auc 계산
+> >
+> > 특이도 fpr x축,  y축 민감도 tpr 로 treshold로 만들어서
+> >
+> > 정의하고 roccruve를 만듦
 
-하나는 data고, 하나는 class_label (0,1)
-
-train은 7:3
-
-예측은 test data로 해야된다
-
-probs에서 데이터 다가지고 오고, labeling이 postive 1
-
-실제 데이타 testy 예측한 probs를 roc 커브의 auc 계산
-
-특이도 fpr x축,  y축 민감도 tpr 로 treshold로 만들어서
-
-정의하고 roccruve를 만듦
