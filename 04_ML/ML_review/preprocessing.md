@@ -1,6 +1,6 @@
-# 머신러닝
+# 데이터 전처리 (Preprocessing)
 
-## 데이터 전처리 (Preprocessing)
+코드 >> [ML_02. Data_preprocessing](04_ML/Multi_ML_Python/ML_02. Data_preprocessing.ipynb)
 
 
 
@@ -21,7 +21,7 @@
 
 
 
-1. 결손 데이터 처리 - NaN/Null 처리  ==SimpleImputer==
+## 1. 결손 데이터 처리 - NaN/Null 처리  ==SimpleImputer==
 
 - 사이킷런의 `SimpleImputer` 클래스, 판다스의 `isnan()` -> `fillna()` or `dropna()`
 - strategy : string, optional (default = 'mean')
@@ -32,7 +32,7 @@
 
 
 
-### SimpleImputer NaN처리 Python
+- SimpleImputer NaN처리 Python
 
 ```python
 from sklearn.impute import SimpleImputer
@@ -48,28 +48,52 @@ nan >> 평균값으로 대치
 
 
 
+------------------
 
 
-2. 피처 스케일링(Feature Scaling)과 정규화
 
-- 표준화(standardization)   ==StandardScaler==
-  - 값의 분포를 평균 0이고, 분산이 1인 가우시안 정규분포를 가진 값 -> `standardScaler`
-  - 경사하강법(서포트 벡터머신이나, 선형회귀, 로지스틱 회귀)에서 데이터가 정규분포를 가지고 있다고 가정하고 구현됐기 떄문에 표준화를 적용하는 것은 예측 성능 향상에 중요한 요소
-  - mu는 한 특성의 평균값이고 sigma는 표준편차
-  - 어떤 특성의 값들이 정규분포를 따른다고 가정하고 평균 0, 표준편차 1을 갖도록 변환해 주는 것
-  - 최솟값과 최댓값의 크기를 제한하지 않기 때무에 이상치를 파악할 수 있음
-  - 정규화처럼 특성값의 범위가 0과 1의 범위로 균일하게 바뀌지 않음
+
+
+## 2. 피처 스케일링(Feature Scaling)과 정규화
+
+
+
+### 표준화(standardization)   ==StandardScaler==
+
+- 값의 분포를 평균 0이고, 분산이 1인 가우시안 정규분포를 가진 값 -> `standardScaler`
+- 경사하강법(서포트 벡터머신이나, 선형회귀, 로지스틱 회귀)에서 데이터가 정규분포를 가지고 있다고 가정하고 구현됐기 떄문에 표준화를 적용하는 것은 예측 성능 향상에 중요한 요소
+- mu는 한 특성의 평균값이고 sigma는 표준편차
+- 어떤 특성의 값들이 정규분포를 따른다고 가정하고 평균 0, 표준편차 1을 갖도록 변환해 주는 것
+- 최솟값과 최댓값의 크기를 제한하지 않기 때무에 이상치를 파악할 수 있음
+- 정규화처럼 특성값의 범위가 0과 1의 범위로 균일하게 바뀌지 않음
 
 $$
 \frac{xi-mean(x)}{stdev(x)}\\
 \frac{X-\mu}{\sigma}
 $$
 
-- 정규화(Normalization)   ==MinmaxScaler==
-  - 서로 다른 피처의 크기를 통일하기 위해 크기를 변환해 주는 개념 -> `MinMaxScaler`
-  - 최소 0 ~ 최대 1
-  - 데이터 분포가 정규 분포가 아닐 경우 적용
-  - Nomalization > MinMaxScaler
+- 표준화 Python
+
+```python
+# 표준화
+from sklearn.preprocessing import StandardScaler # 표준화 지원 클래스
+
+sc_x = StandardScaler()
+sc_x.fit_transform(x[:,1:3])
+x[:,1:3] = sc_x.fit_transform(x[:,1:3])
+x
+```
+
+
+
+
+
+### 정규화(Normalization)   ==MinmaxScaler==
+
+- 서로 다른 피처의 크기를 통일하기 위해 크기를 변환해 주는 개념 -> `MinMaxScaler`
+- 최소 0 ~ 최대 1
+- 데이터 분포가 정규 분포가 아닐 경우 적용
+- Nomalization > MinMaxScaler
 
 $$
 \frac{xi-min(x)}{max(x)-min(x)}
@@ -87,23 +111,7 @@ $$
 
 
 
-### 표준화 Python
-
-```python
-# 표준화
-from sklearn.preprocessing import StandardScaler # 표준화 지원 클래스
-
-sc_x = StandardScaler()
-sc_x.fit_transform(x[:,1:3])
-x[:,1:3] = sc_x.fit_transform(x[:,1:3])
-x
-```
-
-
-
-
-
-### MinMaxScaler Python
+- MinMaxScaler Python
 
 ```python
 # 정규화 min_max 최소-최대
