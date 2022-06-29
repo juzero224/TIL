@@ -1,6 +1,6 @@
 # 데이터 전처리 (Preprocessing)
 
-코드 >> [ML_02. Data_preprocessing](04_ML/Multi_ML_Python/ML_02. Data_preprocessing.ipynb)
+코드 >> [ML_02. Data_preprocessing](https://github.com/juzero224/TIL/blob/a848f7a5a86d1af9c47592a16db7298af80e4535/04_ML/Multi_ML_Python/ML_02.%20Data_preprocessing.ipynb)
 
 
 
@@ -15,11 +15,15 @@
   - 이상치 제거
   - Feature 선택, 추출 및 가공 -> Feature Engineering
 
+<br>
 
+<br>
 
 -----------------------
 
+<br>
 
+<br>
 
 ## 1. 결손 데이터 처리 - NaN/Null 처리  ==SimpleImputer==
 
@@ -46,17 +50,21 @@ nan >> 평균값으로 대치
 '''
 ```
 
+<br>
 
+<br>
 
 ------------------
 
+<br>
 
+<br>
 
 
 
 ## 2. 피처 스케일링(Feature Scaling)과 정규화
 
-
+<br>
 
 ### 표준화(standardization)   ==StandardScaler==
 
@@ -84,9 +92,11 @@ x[:,1:3] = sc_x.fit_transform(x[:,1:3])
 x
 ```
 
+<br>
 
+<br>
 
-
+<br>
 
 ### 정규화(Normalization)   ==MinmaxScaler==
 
@@ -99,7 +109,7 @@ $$
 \frac{xi-min(x)}{max(x)-min(x)}
 $$
 
-
+<br>
 
 | Normalization                            | Standardization                            |
 | ---------------------------------------- | ------------------------------------------ |
@@ -109,7 +119,7 @@ $$
 | 분포에 대해 모를 때 유용                 | 피처가 정규분포(가우시안 분포)인 경우 유용 |
 | MinMaxScaler, Normalizer                 | StandardScaler, RobustScaler               |
 
-
+<br>
 
 - MinMaxScaler Python
 
