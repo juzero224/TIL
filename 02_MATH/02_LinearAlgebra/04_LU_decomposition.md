@@ -82,8 +82,20 @@ Ux = y
 $$
 Ux=y를 앞서 구한 y값에 넣고 풀면 x에 대한 답을 얻을 수 있다
 
+ex.
 
 
+$$
+P_{31}=\begin{bmatrix}2 & 0& 0 \\ 0 & -2 & 0 \\ -1 & 4 & 5\end{bmatrix} \begin{bmatrix} y1  \\ y2 \\ y3\end{bmatrix} =  \begin{bmatrix} -4  \\ -2 \\ 6\end{bmatrix}
+$$
+
+2y_1 = 4
+
+-2y_2 = -2
+
+-y_1 + 4y_2 + 5y_3 = 6
+
+-> y_1 = -2, y_2 =1, y_3 = 0
 
 
 ------------
