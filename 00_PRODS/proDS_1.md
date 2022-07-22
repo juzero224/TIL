@@ -18,10 +18,11 @@
 
 <br>
 
-- Q2. 종속변수와 가장 강한 상관관계를 가지고 있는 독립변수의 상관계수
+- Q2.  상관분석
 
   ```python
   # 세 가지 마케팅 채널의 예산과 매출액의 상관분석
+  # 종속변수와 가장 강한 상관관계를 가지고 있는 독립변수의 상관계수
   
   q2 = dat1[['TV', 'Radio', 'Social_Media', 'Sales']].corr()
   q2_corr = q2['Sales'].drop('Sales').abs()
@@ -48,7 +49,7 @@
   
   sns.pairplot(dat1[['TV', 'Radio', 'Social_Media', 'Sales']])
   ```
-
+  
   > `abs()` : 절대값
   >
   > ![image-20220714234953690](proDS-imgaes/image-20220714234953690.png)
@@ -164,7 +165,7 @@
   >Prob(F-statistic) : 회귀식이 유의미한지 판단 (0.05 이하일 경우 변수끼리 매우 관련있다고 판단)
   > AIC : 표본의 개수와 모델의 복잡성을 기반으로 한 모델을 평가, 수치가 낮을 수록 좋음
   >BIC : AIC와 유사하나 패널티를 부여하여 AIC보다 모델 평가 성능이 더 좋고, 수치가 낮을 수록 좋음
-<br>
+  <br>
 
   > - y - y_hat = 잔차가 최소되도록 least squares 방법을 사용한 것
   >
