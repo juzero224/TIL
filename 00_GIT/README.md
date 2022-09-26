@@ -1,202 +1,121 @@
-# markdown 필기
+# GIT 명령어 Cheating Sheet
 
-## Heading(#)
+##  **Git - Github 연결 (User)**
 
-* `#` 해시태그의 개수만큼 헤딩의 중요도가 결정됨
-* `h1`~ `h6` 태그가 있음
+### **한번만 해도 되는 작업**
 
-<br>
+`git config --global user.name <username>` :  username 등록
 
-## List (1,*,-)
+`git config --global user.name` :  username 확인
 
-### 순서가 있는 리스트
+`git config --global user.email <email>` : email 등록
 
-1. 하나
-2. 둘
-3. 셋
-4. 넷!
+`git config --global user.email` : email 확인
 
-* `숫자`+`.`으로 작성 가능
 
-### 순서가 없는 리스트
 
-* 이거
-* 저거
-* 그거
-* 요거
-* `*/-` + `space bar`으로 작성 가능.
+## **Git - Github 연결 (Repository)**
 
-<br>
+### **⭐️Repository 연결할때는 한번만 해도 되는 작업⭐️**
 
-## Code Block(`)
+`git init` : git 시작
 
-오늘 배운 내용
+`git remote add origin <git repository url>` : repository 연결
 
-```code block``` `inline code block`
 
-```python
-import time
 
-time.sleep(60)
-print('안녕 여러분?')
-```
+### **파일 수정, 생성, 삭제 할때마다 해야하는 작업!!! == 뭐든 할때마다**
 
-* `백킷` *3 -> 코드 블럭
-* `백킷` *2 -> 인코드 블럭
+`git add .` : 모든 파일 staging area에 올리기
 
-<br>
+`git add <file_name>` :  파일 staging area에 올리기
 
-## Link
+`git commit -m '<commit message>'` : 커밋 message 작성
 
-[네이버](https://www.naver.com)
+`git push origin master` : github로 밀어내기!
 
-[구글](https://google.com)
+`git pull` : github에서 로컬로 당겨오기!
 
-- `[텍스트]` `(링크)`
-  - 링크로 이동하게 된다.
 
 
+* 파일 삭제
+  1. 워킹디렉토리(즉, 로컬)에서 파일/폴더 삭제
+  2. `git add.`
+  3. `git commit -m <commit message>`
+  4. `git push origin master`
+  5. 삭제된 로컬 환경 깃헙에 반영
 
-## Image
 
-![아이유](README-imgaes/vKspl9Et_400x400.jpg)
 
+## 
 
+* `git config --global user.name <user_name>` : username
+* `git config --global user.gmail <user_email> `: email
+  * config 내 로컬과 깃헙 계정을 연결시켜줄 때 1회만!!
+* `git init` : 레포를 만들고 워킹 디렉토리랑 연결시켜줄때 최초 1회
+  * 레포 만들때마다!
+  * 여러분들이 레포를 만들때마다 계속 해줘야 한다.
+* `git status` : 워킹 디렉토리에 어떤 변화가 있는지 알아보는 명령어.
+  * 워킹 디렉토리 단계와 스테이지 에리아 단계의 변화
+* `git add` +`.`: 전체 다 staging area로 올리기
+* `git add` + `파일명.확장자` : 이것만 올려
+  * ex) `git add 파일1 파일2 파일3`
+* `git commit` + `-m` `"commit message"` : 
+  * 되도록 명령어로 적기
+    * 동사형으로 시작하기
+    * 영어로 적기
+  * 약속일뿐 법은 아니다.
+* `git log --oneline` : `-`(하이픈) 두개입니다.
+  * `commit`된 상황에서 어떤 메시지로 언제 뭐가 올라갔는지 알기위한 명령어
+* `git remote add`+`origin <github 주소>` : 내 워킹 디렉토리와 레포지토리 연결
+  * `git remote -v` : 리모트가 잘 들어갔는지 확인
+* `git push`+`origin master`: 최종으로 깃헙에 올린다!!
 
-![꼬부기(포켓몬)](README-imgaes/1200.png)
 
 
+### 확인사항
 
-`![텍스트]` `(링크)`
+1. `git config --global user.name / email` 잘 적었는지 확인
 
-- 링크로 이동하게 된다.
+2. ```
+   git remote 확인
+   ```
 
-<br>
+   - `git remote add origin <깃헙 주소>`
 
-## Text Emphasis(*/_)
+3. `git add` 했는지
 
-`*/_(underbar)` 활용
+4. `git commit` 잘 했는지 확인
 
 
 
-### Bold
+-------
 
-- **박주영**
-- __박주영__
-- **신상연**
-- `**` 텍스트 `**`
-- `ctrl` + `b`
 
-### Italic
 
-- *이수진*
-- *박주영*
-- `*` 텍스트 `*`
-- `ctrl` + `i`
+`git branch` : 브랜치의 종류, 어느 브랜치인지 확인하기
 
-### strikeout
+`git branch <브랜치>` : 브랜치 생성
 
-- ~~오지혜~~
-- `~~` 텍스트 `~~`
+* `git branch haley`
+* 브랜치 생성 예시 `git branch juyeong`
 
-### 형광펜
+`git checkout <브랜치>` : 브랜치 이동
 
-* ==텍스트==
-* `==`텍스트`==`
+* 없는 브랜치 명을 작성했을땐 에러 발생
 
+`git merge <브랜치명>`:
 
+* ex. (master) 브랜치에서 (juyeong) 브랜치로
+  * `git merge juyeong` 현 브랜치 위치는 master
+  * merge 할 때
+    * `>>>> head ..... <<<<<< 브랜치` 처럼 구분 짓는 선만 지워주고 남길 것만 남기면 됨
 
-<br>
+`git clone <레포주소>` : 그대로 복제
 
-## Divider(-/_)
+* 그냥 말그대로 복제일 뿐, 내가 수정한 것을 반영해달라고 요청할 권한이 없다.
+* `git pull`
 
----
+`fork`:
 
-- `_\-` * 3
-- HTML
-  - `<br>` : 한줄 띄어주기
-  - `<hr>` : 한줄 그어주기
-
-<hr>
-
-<br>
-
-## Blockquotes (>)
-
-> `>` 한개만 작성하면 인용문을 만들 수 있습니다.
->
-> > depth가 생깁니다
-> >
-> > > depth가 또 생겼습니다.
-
-<br>
-
-## Table
-
-`|` (bar) : 선
-
-`space bar` : 칸
-
-| Header_1 | Header_2 |
-| -------- | -------- |
-| Value 01 | Value 02 |
-
-
-
-## Check Box
-
-* `-[ ]` : 체크박스
-
-* `- [x]` : 체크박스 체크
-
-- [ ] : 체크박스
-
-- [x] : 체크박스 체크
-
-
-
-## 위 첨자, 아래 첨자
-
-* 텍스트 <sup>텍스트</sup>
-
-* 텍스트 <sub>텍스트</sub>
-
-* 텍스트 `<sup>`텍스트`</sup>`
-
-* 텍스트 `<sub>`텍스트`</sub>`
-
-
-
-## 각주
-
-텍스트 Typora[^1]
-
-[^1]: Typora는 markdown 편집기(뷰어) 입니다.
-
-* 텍스트 Typora`[^1]`
-* ^1을 누르면 각주를 넣을 수 있다.
-
-
-
-## 주석
-
-* 텍스트 <!--열공-->
-* 텍스트 `<!--열공-->`
-
-
-
-## HTML 태그를 이용한 글자 색상 변경
-
-* <span style='color:blue'>안녕</span>
-
-* <span style='color:#a83236'>나는</span>
-* <span style='color:rgb(21,102,42)'>주영이야</span>
-
-* `<span style='color:blue'>`안녕`</span>`
-
-* `<span style='color:#a83236'>`나는`</span>`
-* `<span style='color:rgb(21,102,42)'>`주영이야`</span>`
-
-* color 검색
-* [color picker](https://www.w3schools.com/colors/colors_picker.asp)
-
+* `pull request` : 내가 수정한 것을 반영해달라고 요청을 보낼 수 있다.
